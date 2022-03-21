@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tabbed Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_by">Search by:</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="confirmpassword">confirmPassword</string>
+    <string name="create_user">Create User</string>
+    <string name="open_button_menu">open button menu</string>
+</resources>
