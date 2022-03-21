@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="8sp">
     <ImageView
@@ -22,7 +25,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Title"
+            android:hint="@string/title"
             android:fontFamily="casual"
             android:backgroundTint="@color/white"
             android:textSize="24sp"
@@ -42,7 +45,7 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Description"
+            android:hint="@string/description"
             android:fontFamily="casual"
             android:backgroundTint="@color/white"
             android:textSize="24sp"
@@ -57,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:fontFamily="casual"
-            android:text="Select a date."
+            android:text="@string/select_a_date"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -72,7 +75,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:fontFamily="casual"
-            android:text="Select a time."
+            android:text="@string/select_a_time"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -95,6 +98,24 @@
             android:textSize="24sp"
             android:textStyle="bold"
             />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/share_task"
+            android:textAllCaps="false"
+            app:cornerRadius="12sp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/delete_task"
+            android:textAllCaps="false"
+            app:cornerRadius="12sp"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
+</ScrollView>

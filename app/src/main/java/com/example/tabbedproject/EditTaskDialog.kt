@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -35,7 +36,9 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            uri = it
+            if (it != null) {
+                uri = it
+            } else uri = Uri.EMPTY
             Log.d("ali", "onCreateDialog: " + uri.toString())
             binding.image.setImageURI(uri)
         }
@@ -105,6 +108,17 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         binding.timePicker.setOnClickListener {
             timePick()
         }
+
+        binding.shareButton.setOnClickListener {
+            val shareText = "title: ${task.title}, description: ${task.description}, time: ${task.date} ${task.time}, status: ${task.state}"
+            val x = ShareCompat.IntentBuilder(requireContext()).setText(shareText).setType("text/plain").intent
+            startActivity(x)
+        }
+
+        binding.deleteButton.setOnClickListener {
+            sharedViewModel.deleteTask(task)
+        }
+
     }
 
     private fun datePick() {

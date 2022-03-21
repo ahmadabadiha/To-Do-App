@@ -1,20 +1,19 @@
 package com.example.tabbedproject
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tabbedproject.data.Task
-import com.example.tabbedproject.databinding.TaslLayoutBinding
+import com.example.tabbedproject.databinding.TaskLayoutBinding
 import java.util.*
 
 class TaskAdapter(private val doneTasks: List<Task>?) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     private lateinit var itemClick: ItemClick
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val binding = TaslLayoutBinding.bind(itemView)
+        private val binding = TaskLayoutBinding.bind(itemView)
         private lateinit var task: Task
 
         init {
@@ -36,7 +35,7 @@ class TaskAdapter(private val doneTasks: List<Task>?) : RecyclerView.Adapter<Tas
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.tasl_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_layout, parent, false)
         return TaskViewHolder(view)
     }
 

@@ -40,31 +40,23 @@ class DoneFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.getUserTasks(sharedViewModel.username)
         initClickListeners()
-
         myAdapter = TaskAdapter(doneTasks)
 
         sharedViewModel.taskList.observe(viewLifecycleOwner) {
-            binding.group.isGone = true
-            doneTasks = it.filter {
-                it.state == "done"
-            }
-            Log.d("ali", "onSearh: " + sharedViewModel.searchCouple.toString())
+           binding.noTaskView.isVisible = it.isEmpty()
 
-            if (sharedViewModel.searchCouple.second.isNotBlank()) {
-                applySearch()
-                Log.d("ali", "onSearh: ")
+            doneTasks = it.filter {
+                it.state == "Done"
             }
 
             myAdapter = TaskAdapter(doneTasks)
-            myAdapter.onViewClicked(object : TaskAdapter.ItemClick {
-                override fun onClick(task: Task) {
-                    val dialog = EditTaskDialog(task)
-                    dialog.show(childFragmentManager, "Add task dialog")
-                }
-            })
             setRecyclerAdapter(myAdapter)
 
 
+        }
+
+        sharedViewModel.searchCouple.observe(viewLifecycleOwner) {
+            applySearch()
         }
     }
 
@@ -87,6 +79,11 @@ class DoneFragment : Fragment() {
             val dialog = SearchTaskDialog()
             dialog.show(childFragmentManager, "Search task dialog")
         }
+
+        binding.deleteAllFloatingButton.setOnClickListener {
+            DeleteAllDialog().show(childFragmentManager, "Delete all dialog")
+
+        }
     }
 
     private fun openFabs() {
@@ -97,6 +94,11 @@ class DoneFragment : Fragment() {
         }
 
         binding.searchFloatingButton.apply {
+            isVisible = true
+            isClickable = true
+            startAnimation(fromButtom)
+        }
+        binding.deleteAllFloatingButton.apply {
             isVisible = true
             isClickable = true
             startAnimation(fromButtom)
@@ -118,39 +120,50 @@ class DoneFragment : Fragment() {
             isClickable = false
             startAnimation(toButtom)
         }
+
+        binding.deleteAllFloatingButton.apply {
+            isGone = true
+            isClickable = false
+            startAnimation(toButtom)
+        }
         binding.openFloatingButton.startAnimation(rotateClose)
 
         clicked = !clicked
     }
 
     private fun setRecyclerAdapter(myAdapter: TaskAdapter) {
+        myAdapter.onViewClicked(object : TaskAdapter.ItemClick {
+            override fun onClick(task: Task) {
+                val dialog = EditTaskDialog(task)
+                dialog.show(childFragmentManager, "Edit task dialog")
+            }
+        })
         binding.recyclerView.apply {
             adapter = myAdapter
             layoutManager = LinearLayoutManager(context)
             myAdapter.notifyDataSetChanged()
         }
     }
-private fun applySearch(){
 
-    val searchCouple = sharedViewModel.searchCouple
-    val searchedAttribute = searchCouple.first
-    val query = searchCouple.second
-    when (searchedAttribute) {
-        "title" -> doneTasks.filter { it.title.contains(query) }
-        "description" -> doneTasks.filter { it.description.contains(query) }
-        "date" -> doneTasks.filter { it.date.contains(query) }
-        "time" -> doneTasks.filter { it.time.contains(query) }
+    private fun applySearch() {
+
+        val searchCouple = sharedViewModel.searchCouple.value!!
+        val searchedAttribute = searchCouple.first
+        val query = searchCouple.second
+        if (searchedAttribute.isBlank() || query.isBlank()) setRecyclerAdapter(myAdapter)
+        else {
+            var searchedTask = listOf<Task>()
+            when (searchedAttribute) {
+                "title" -> searchedTask = doneTasks.filter { it.title.contains(query, true) }
+                "description" -> searchedTask = doneTasks.filter { it.description.contains(query, true) }
+                "date" -> searchedTask = doneTasks.filter { it.date.contains(query, true) }
+                "time" -> searchedTask = doneTasks.filter { it.time.contains(query, true) }
+            }
+            setRecyclerAdapter(TaskAdapter(searchedTask))
+        }
     }
-    myAdapter.notifyDataSetChanged()
-    sharedViewModel.searchCouple = Pair("","")
-}
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("ali", "onSearh resume: " + sharedViewModel.searchCouple.toString())
 
-        applySearch()
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

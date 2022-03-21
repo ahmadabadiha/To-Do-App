@@ -10,7 +10,7 @@ import java.lang.IllegalArgumentException
 class SharedViewModel(private val repository: Repository) : ViewModel() {
     private var _isUserSet = MutableLiveData<Boolean>()
     val isUserSet: LiveData<Boolean> get() = _isUserSet
-    var searchCouple = Pair("", "")
+    var searchCouple = MutableLiveData<Pair<String,String>>()
     /*private var _username =  MutableLiveData<String>()
     val username :LiveData<String> = _username*/
     var username = ""
@@ -53,15 +53,11 @@ class SharedViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getUserTasks(username: String) = viewModelScope.launch {
-        // taskList.postValue(repository.getUserTasks(username).value)
         taskList = repository.getUserTasks(username)
+    }
+
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
     }
 }
 
-class TaskViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
-            return SharedViewModel(repository) as T
-        } else throw IllegalArgumentException("Invalid ViewModel!!!")
-    }
-}

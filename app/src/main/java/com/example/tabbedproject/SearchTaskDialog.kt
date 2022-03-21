@@ -27,9 +27,9 @@ class SearchTaskDialog : DialogFragment() {
                 binding.root
             ).setTitle("Search between done tasks:")
                 .setPositiveButton("Search", DialogInterface.OnClickListener { dialog, id ->
-                    if (binding.searchET.text.toString().isNotBlank() && binding.autoCompleteTextView.text.toString().isNotBlank()){
-                        sharedViewModel.searchCouple = Pair( binding.autoCompleteTextView.text.toString(),binding.searchET.text.toString())
-                    } else Toast.makeText(requireContext(), "Please enter the required fields.", Toast.LENGTH_SHORT).show()
+                   // if (binding.searchET.text.toString().isNotBlank() && binding.autoCompleteTextView.text.toString().isNotBlank()){
+                        sharedViewModel.searchCouple.value = Pair( binding.autoCompleteTextView.text.toString(),binding.searchET.text.toString())
+                  //  } else Toast.makeText(requireContext(), "Please enter the required fields.", Toast.LENGTH_SHORT).show()
                     dismiss()
                 }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
                     getDialog()?.cancel()

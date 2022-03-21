@@ -31,6 +31,10 @@ class Repository(private val taskDao: TaskDao, private val userDao: UserDao) {
         taskDao.updateTask(task)
     }
 
+    suspend fun deleteAll(){
+        taskDao.deleteAll()
+    }
+
     fun getUserTasks(username: String): LiveData<List<Task>> {
         return taskDao.getUserTasks(username)
     }
