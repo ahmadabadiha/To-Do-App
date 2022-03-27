@@ -1,10 +1,8 @@
 package com.example.tabbedproject
 
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.DialogInterface
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -58,7 +56,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
             builder.setView(
                 binding.root
             ).setTitle("Edit your task:")
-                .setPositiveButton("Save", DialogInterface.OnClickListener { dialog, id ->
+                .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
                     if (!::uri.isInitialized) uri = Uri.EMPTY
                     val taskId = task.id
                     val task = Task(
@@ -73,8 +71,8 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
                     )
                     sharedViewModel.updateTask(task)
                     dismiss()
-                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                    getDialog()?.cancel()
+                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
+                    dialog?.cancel()
                 })
 
             builder.create()
@@ -86,6 +84,9 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         Log.d("ali", "setViews: image address " + task.imageAddress)
         Log.d("ali", "setViews: image address prsed" + parsedUri.toString())
         //Glide.with(requireContext()).load(parsedUri).into(binding.image)
+        //  registerForActivityResult(ActivityResultContracts.GetContent()) {
+        //    binding.image.setImageURI(parsedUri)
+        //  }.launch("image/*")
         //binding.image.setImageURI(parsedUri)
         binding.titleEt.setText(task.title)
         binding.descriptionEt.setText(task.description)
@@ -117,6 +118,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
 
         binding.deleteButton.setOnClickListener {
             sharedViewModel.deleteTask(task)
+            dismiss()
         }
 
     }
@@ -152,4 +154,6 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

@@ -40,25 +40,10 @@ class ToDoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.getUserTasks(sharedViewModel.username)
-        initClickListeners()
         myAdapter = TaskAdapter(todoTasks)
+        initClickListeners()
+        initObserve()
 
-        sharedViewModel.taskList.observe(viewLifecycleOwner) {
-            binding.noTaskView.isVisible = it.isEmpty()
-
-            todoTasks = it.filter {
-                it.state == "ToDo"
-            }
-
-            myAdapter = TaskAdapter(todoTasks)
-            setRecyclerAdapter(myAdapter)
-
-
-        }
-
-        sharedViewModel.searchCouple.observe(viewLifecycleOwner) {
-            applySearch()
-        }
     }
 
     private fun initClickListeners() {
@@ -73,7 +58,7 @@ class ToDoFragment : Fragment() {
             }
         }
         binding.addFloatingButton.setOnClickListener {
-            val dialog = AddTaskDialog("ToDo")
+            val dialog = AddTaskDialog("To Do")
             dialog.show(childFragmentManager, "Add task dialog")
         }
         binding.searchFloatingButton.setOnClickListener {
@@ -84,6 +69,21 @@ class ToDoFragment : Fragment() {
         binding.deleteAllFloatingButton.setOnClickListener {
             DeleteAllDialog().show(childFragmentManager, "Delete all dialog")
 
+        }
+    }
+
+    private fun initObserve() {
+        sharedViewModel.taskList.observe(viewLifecycleOwner) {
+            todoTasks = it.filter {
+                it.state == "To Do"
+            }
+            binding.noTaskView.isVisible = todoTasks.isEmpty()
+            myAdapter = TaskAdapter(todoTasks)
+            setRecyclerAdapter(myAdapter)
+        }
+
+        sharedViewModel.searchCouple.observe(viewLifecycleOwner) {
+            applySearch()
         }
     }
 

@@ -11,21 +11,16 @@ class SharedViewModel(private val repository: Repository) : ViewModel() {
     private var _isUserSet = MutableLiveData<Boolean>()
     val isUserSet: LiveData<Boolean> get() = _isUserSet
     var searchCouple = MutableLiveData<Pair<String,String>>()
-    /*private var _username =  MutableLiveData<String>()
-    val username :LiveData<String> = _username*/
     var username = ""
 
-    //var taskList = MutableLiveData<List<Task>>()
     lateinit var taskList: LiveData<List<Task>>
     private lateinit var userList: List<User>
 
     fun checkUserSet(user: User) {
         if (userList.contains(user)) {
-            //_username.postValue(user.username)
             username = user.username
             _isUserSet.value = true
         } else {
-            // _username.postValue("")
             _isUserSet.value = false
         }
     }
@@ -36,7 +31,6 @@ class SharedViewModel(private val repository: Repository) : ViewModel() {
 
     fun getUsers() = viewModelScope.launch {
         userList = repository.getUsers()
-        Log.d("ali", "getUsers: " + userList[0].toString())
     }
 
     fun insertTask(task: Task) = viewModelScope.launch {
@@ -48,7 +42,6 @@ class SharedViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun updateTask(task: Task) = viewModelScope.launch {
-        Log.d("ali", "updateTask: " + task.toString())
         repository.updateTask(task)
     }
 

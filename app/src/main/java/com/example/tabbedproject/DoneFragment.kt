@@ -39,25 +39,10 @@ class DoneFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.getUserTasks(sharedViewModel.username)
-        initClickListeners()
         myAdapter = TaskAdapter(doneTasks)
+        initClickListeners()
+        initObserve()
 
-        sharedViewModel.taskList.observe(viewLifecycleOwner) {
-           binding.noTaskView.isVisible = it.isEmpty()
-
-            doneTasks = it.filter {
-                it.state == "Done"
-            }
-
-            myAdapter = TaskAdapter(doneTasks)
-            setRecyclerAdapter(myAdapter)
-
-
-        }
-
-        sharedViewModel.searchCouple.observe(viewLifecycleOwner) {
-            applySearch()
-        }
     }
 
     private fun initClickListeners() {
@@ -83,6 +68,21 @@ class DoneFragment : Fragment() {
         binding.deleteAllFloatingButton.setOnClickListener {
             DeleteAllDialog().show(childFragmentManager, "Delete all dialog")
 
+        }
+    }
+
+    private fun initObserve() {
+        sharedViewModel.taskList.observe(viewLifecycleOwner) {
+            doneTasks = it.filter {
+                it.state == "Done"
+            }
+            binding.noTaskView.isVisible = doneTasks.isEmpty()
+            myAdapter = TaskAdapter(doneTasks)
+            setRecyclerAdapter(myAdapter)
+        }
+
+        sharedViewModel.searchCouple.observe(viewLifecycleOwner) {
+            applySearch()
         }
     }
 

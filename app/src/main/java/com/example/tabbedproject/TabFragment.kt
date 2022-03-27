@@ -23,7 +23,7 @@ class TabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewPager.apply {
-            adapter = ViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
+            adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         }
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {

@@ -35,9 +35,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObserverSet() {
-        /*sharedViewModel.username.observe(viewLifecycleOwner) {
-            username = it
-        }*/
         sharedViewModel.isUserSet.observe(viewLifecycleOwner) {
             loggedIn = it
         }
