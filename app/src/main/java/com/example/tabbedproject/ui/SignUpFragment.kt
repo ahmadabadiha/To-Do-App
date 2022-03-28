@@ -1,4 +1,4 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.tabbedproject.TaskApplication
 import com.example.tabbedproject.data.User
 import com.example.tabbedproject.databinding.FragmentSignUpBinding
 
@@ -38,9 +39,14 @@ class SignUpFragment : Fragment() {
     }
 
     private fun isValidated(): Boolean {
+
         if (binding.password.text.toString() == binding.confirmPassword.text.toString() && binding.username.text.toString()
                 .isNotBlank() && binding.password.text.toString().isNotBlank()
-        ) return true
+        ) {
+            sharedViewModel.userList.forEach {
+                if (it.username != binding.username.text.toString()) return true
+            }
+        }
         return false
 
     }

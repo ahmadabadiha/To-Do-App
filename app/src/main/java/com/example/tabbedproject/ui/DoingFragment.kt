@@ -1,7 +1,6 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,34 +11,40 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tabbedproject.R
+import com.example.tabbedproject.TaskApplication
 import com.example.tabbedproject.data.Task
-import com.example.tabbedproject.databinding.FragmentDoneBinding
+import com.example.tabbedproject.databinding.FragmentDoingBinding
+import com.example.tabbedproject.ui.dialogs.AddTaskDialog
+import com.example.tabbedproject.ui.dialogs.DeleteAllDialog
+import com.example.tabbedproject.ui.dialogs.EditTaskDialog
+import com.example.tabbedproject.ui.dialogs.SearchTaskDialog
 
-class DoneFragment : Fragment() {
+class DoingFragment : Fragment() {
 
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_open) }
     private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_close) }
     private val toButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom) }
     private val fromButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom) }
     private val sharedViewModel: SharedViewModel by activityViewModels { TaskViewModelFactory((requireActivity().application as TaskApplication).repository) }
-    private var doneTasks: List<Task> = emptyList()
+    private var doingTasks: List<Task> = emptyList()
     private var clicked = false
     private lateinit var myAdapter: TaskAdapter
-    private var _binding: FragmentDoneBinding? = null
+    private var _binding: FragmentDoingBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDoneBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDoingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.getUserTasks(sharedViewModel.username)
-        myAdapter = TaskAdapter(doneTasks)
+        myAdapter = TaskAdapter(doingTasks)
         initClickListeners()
         initObserve()
 
@@ -57,7 +62,7 @@ class DoneFragment : Fragment() {
             }
         }
         binding.addFloatingButton.setOnClickListener {
-            val dialog = AddTaskDialog("Done")
+            val dialog = AddTaskDialog("Doing")
             dialog.show(childFragmentManager, "Add task dialog")
         }
         binding.searchFloatingButton.setOnClickListener {
@@ -73,11 +78,11 @@ class DoneFragment : Fragment() {
 
     private fun initObserve() {
         sharedViewModel.taskList.observe(viewLifecycleOwner) {
-            doneTasks = it.filter {
-                it.state == "Done"
+            doingTasks = it.filter {
+                it.state == "Doing"
             }
-            binding.noTaskView.isVisible = doneTasks.isEmpty()
-            myAdapter = TaskAdapter(doneTasks)
+            binding.noTaskView.isVisible = doingTasks.isEmpty()
+            myAdapter = TaskAdapter(doingTasks)
             setRecyclerAdapter(myAdapter)
         }
 
@@ -154,10 +159,10 @@ class DoneFragment : Fragment() {
         else {
             var searchedTask = listOf<Task>()
             when (searchedAttribute) {
-                "title" -> searchedTask = doneTasks.filter { it.title.contains(query, true) }
-                "description" -> searchedTask = doneTasks.filter { it.description.contains(query, true) }
-                "date" -> searchedTask = doneTasks.filter { it.date.contains(query, true) }
-                "time" -> searchedTask = doneTasks.filter { it.time.contains(query, true) }
+                "title" -> searchedTask = doingTasks.filter { it.title.contains(query, true) }
+                "description" -> searchedTask = doingTasks.filter { it.description.contains(query, true) }
+                "date" -> searchedTask = doingTasks.filter { it.date.contains(query, true) }
+                "time" -> searchedTask = doingTasks.filter { it.time.contains(query, true) }
             }
             setRecyclerAdapter(TaskAdapter(searchedTask))
         }
@@ -168,4 +173,5 @@ class DoneFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

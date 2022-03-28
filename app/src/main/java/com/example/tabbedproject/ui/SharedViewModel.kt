@@ -1,11 +1,9 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.data.User
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class SharedViewModel(private val repository: Repository) : ViewModel() {
     private var _isUserSet = MutableLiveData<Boolean>()
@@ -14,7 +12,7 @@ class SharedViewModel(private val repository: Repository) : ViewModel() {
     var username = ""
 
     lateinit var taskList: LiveData<List<Task>>
-    private lateinit var userList: List<User>
+    lateinit var userList: List<User>
 
     fun checkUserSet(user: User) {
         if (userList.contains(user)) {

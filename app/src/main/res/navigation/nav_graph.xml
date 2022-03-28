@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment2"
-        android:name="com.example.tabbedproject.LoginFragment"
+        android:name="com.example.tabbedproject.ui.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment2_to_tabFragment"
@@ -18,11 +18,11 @@
     </fragment>
     <fragment
         android:id="@+id/tabFragment"
-        android:name="com.example.tabbedproject.TabFragment"
+        android:name="com.example.tabbedproject.ui.TabFragment"
         android:label="TabFragment" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.tabbedproject.SignUpFragment"
+        android:name="com.example.tabbedproject.ui.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action

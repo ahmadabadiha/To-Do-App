@@ -1,10 +1,11 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tabbedproject.R
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.databinding.TaskLayoutBinding
 import java.util.*

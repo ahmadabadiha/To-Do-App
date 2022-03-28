@@ -1,4 +1,4 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,36 +11,40 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tabbedproject.R
+import com.example.tabbedproject.TaskApplication
 import com.example.tabbedproject.data.Task
-import com.example.tabbedproject.databinding.FragmentToDoBinding
+import com.example.tabbedproject.databinding.FragmentDoneBinding
+import com.example.tabbedproject.ui.dialogs.AddTaskDialog
+import com.example.tabbedproject.ui.dialogs.DeleteAllDialog
+import com.example.tabbedproject.ui.dialogs.EditTaskDialog
+import com.example.tabbedproject.ui.dialogs.SearchTaskDialog
 
-
-class ToDoFragment : Fragment() {
-
+class DoneFragment : Fragment() {
 
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_open) }
     private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_close) }
     private val toButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom) }
     private val fromButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom) }
     private val sharedViewModel: SharedViewModel by activityViewModels { TaskViewModelFactory((requireActivity().application as TaskApplication).repository) }
-    private var todoTasks: List<Task> = emptyList()
+    private var doneTasks: List<Task> = emptyList()
     private var clicked = false
     private lateinit var myAdapter: TaskAdapter
-    private var _binding: FragmentToDoBinding? = null
+    private var _binding: FragmentDoneBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentToDoBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDoneBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.getUserTasks(sharedViewModel.username)
-        myAdapter = TaskAdapter(todoTasks)
+        myAdapter = TaskAdapter(doneTasks)
         initClickListeners()
         initObserve()
 
@@ -58,7 +62,7 @@ class ToDoFragment : Fragment() {
             }
         }
         binding.addFloatingButton.setOnClickListener {
-            val dialog = AddTaskDialog("To Do")
+            val dialog = AddTaskDialog("Done")
             dialog.show(childFragmentManager, "Add task dialog")
         }
         binding.searchFloatingButton.setOnClickListener {
@@ -74,11 +78,11 @@ class ToDoFragment : Fragment() {
 
     private fun initObserve() {
         sharedViewModel.taskList.observe(viewLifecycleOwner) {
-            todoTasks = it.filter {
-                it.state == "To Do"
+            doneTasks = it.filter {
+                it.state == "Done"
             }
-            binding.noTaskView.isVisible = todoTasks.isEmpty()
-            myAdapter = TaskAdapter(todoTasks)
+            binding.noTaskView.isVisible = doneTasks.isEmpty()
+            myAdapter = TaskAdapter(doneTasks)
             setRecyclerAdapter(myAdapter)
         }
 
@@ -155,10 +159,10 @@ class ToDoFragment : Fragment() {
         else {
             var searchedTask = listOf<Task>()
             when (searchedAttribute) {
-                "title" -> searchedTask = todoTasks.filter { it.title.contains(query, true) }
-                "description" -> searchedTask = todoTasks.filter { it.description.contains(query, true) }
-                "date" -> searchedTask = todoTasks.filter { it.date.contains(query, true) }
-                "time" -> searchedTask = todoTasks.filter { it.time.contains(query, true) }
+                "title" -> searchedTask = doneTasks.filter { it.title.contains(query, true) }
+                "description" -> searchedTask = doneTasks.filter { it.description.contains(query, true) }
+                "date" -> searchedTask = doneTasks.filter { it.date.contains(query, true) }
+                "time" -> searchedTask = doneTasks.filter { it.time.contains(query, true) }
             }
             setRecyclerAdapter(TaskAdapter(searchedTask))
         }

@@ -1,29 +1,20 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui.dialogs
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDialog
-import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.databinding.AddTaskDialogBinding
-import com.example.tabbedproject.databinding.FragmentDoneBinding
-import java.lang.Exception
+import com.example.tabbedproject.ui.SharedViewModel
 import java.util.*
 
 class AddTaskDialog(private val state: String) : DialogFragment() {

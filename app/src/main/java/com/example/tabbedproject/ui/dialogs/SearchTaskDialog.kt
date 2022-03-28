@@ -1,15 +1,15 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.example.tabbedproject.R
 import com.example.tabbedproject.databinding.SearchTaskDialogBinding
+import com.example.tabbedproject.ui.SharedViewModel
 
 class SearchTaskDialog : DialogFragment() {
     private var _binding: SearchTaskDialogBinding? = null

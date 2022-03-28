@@ -1,26 +1,19 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui.dialogs
 
 import android.app.*
-import android.content.DialogInterface
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.bumptech.glide.Glide
+import com.example.tabbedproject.R
 import com.example.tabbedproject.data.Task
-import com.example.tabbedproject.databinding.AddTaskDialogBinding
 import com.example.tabbedproject.databinding.EditTaskDialogBinding
+import com.example.tabbedproject.ui.SharedViewModel
 import java.util.*
 
 class EditTaskDialog(private val task: Task) : DialogFragment() {
@@ -56,7 +49,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
             builder.setView(
                 binding.root
             ).setTitle("Edit your task:")
-                .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
+                .setPositiveButton("Save") { _, _ ->
                     if (!::uri.isInitialized) uri = Uri.EMPTY
                     val taskId = task.id
                     val task = Task(
@@ -71,9 +64,9 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
                     )
                     sharedViewModel.updateTask(task)
                     dismiss()
-                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
+                }.setNegativeButton("Cancel") { _, _ ->
                     dialog?.cancel()
-                })
+                }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -125,7 +118,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
 
     private fun datePick() {
         val listener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            binding.datePicker.text = "${year.toString()}/${(month + 1).toString()}/${day.toString()}"
+            binding.datePicker.text = "${year}/${(month + 1)}/${day}"
         }
         val calender = Calendar.getInstance()
         val day = calender.get(Calendar.DAY_OF_MONTH)

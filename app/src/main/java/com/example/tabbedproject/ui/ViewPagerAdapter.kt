@@ -1,4 +1,4 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

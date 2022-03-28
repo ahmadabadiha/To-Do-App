@@ -1,4 +1,4 @@
-package com.example.tabbedproject
+package com.example.tabbedproject.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide.init
+import com.example.tabbedproject.R
+import com.example.tabbedproject.TaskApplication
 import com.example.tabbedproject.data.User
 import com.example.tabbedproject.databinding.FragmentLoginBinding
 
