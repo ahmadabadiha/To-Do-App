@@ -5,7 +5,6 @@ import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.data.TaskDao
 import com.example.tabbedproject.data.User
 import com.example.tabbedproject.data.UserDao
-import kotlin.concurrent.thread
 
 class Repository(private val taskDao: TaskDao, private val userDao: UserDao) {
 
@@ -39,8 +38,4 @@ class Repository(private val taskDao: TaskDao, private val userDao: UserDao) {
         return taskDao.getUserTasks(username)
     }
 
-    /*fun checkUserLogin(user: User): Boolean {
-        if (getUsers().contains(user)) return true
-        return false
-    }*/
 }

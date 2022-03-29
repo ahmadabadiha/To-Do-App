@@ -26,14 +26,14 @@ class SearchTaskDialog : DialogFragment() {
             builder.setView(
                 binding.root
             ).setTitle("Search between done tasks:")
-                .setPositiveButton("Search", DialogInterface.OnClickListener { dialog, id ->
-                   // if (binding.searchET.text.toString().isNotBlank() && binding.autoCompleteTextView.text.toString().isNotBlank()){
-                        sharedViewModel.searchCouple.value = Pair( binding.autoCompleteTextView.text.toString(),binding.searchET.text.toString())
-                  //  } else Toast.makeText(requireContext(), "Please enter the required fields.", Toast.LENGTH_SHORT).show()
+                .setPositiveButton("Search") { _, _ ->
+
+                    sharedViewModel.searchCouple.value =
+                        Pair(binding.autoCompleteTextView.text.toString(), binding.searchET.text.toString())
                     dismiss()
-                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                    getDialog()?.cancel()
-                })
+                }.setNegativeButton("Cancel") { _, _ ->
+                    dialog?.cancel()
+                }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

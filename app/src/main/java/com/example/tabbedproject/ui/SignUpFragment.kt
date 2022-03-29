@@ -43,9 +43,7 @@ class SignUpFragment : Fragment() {
         if (binding.password.text.toString() == binding.confirmPassword.text.toString() && binding.username.text.toString()
                 .isNotBlank() && binding.password.text.toString().isNotBlank()
         ) {
-            sharedViewModel.userList.forEach {
-                if (it.username != binding.username.text.toString()) return true
-            }
+           return true
         }
         return false
 

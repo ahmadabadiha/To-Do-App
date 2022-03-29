@@ -4,10 +4,8 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
@@ -29,7 +27,6 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
         super.onCreate(savedInstanceState)
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri = it
-            Log.d("ali", "onCreateDialog: " + uri.toString())
             binding.image.setImageURI(uri)
         }
     }
@@ -39,15 +36,13 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
         sharedViewModel.getUserTasks(sharedViewModel.username)
         initSetListeners()
         initSetObservers()
-        sharedViewModel.taskList.observe(this) {
-            Log.d("ali", "initSetObservers: ${it.toString()}")
-            taskList = it}
+
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setView(
                 binding.root
             ).setTitle("Add a task:")
-                .setPositiveButton("Save", DialogInterface.OnClickListener { dialog, id ->
+                .setPositiveButton("Save") { _, _ ->
                     if (!::uri.isInitialized) uri = Uri.EMPTY
                     val taskId = taskList.size.toString()
                     val task = Task(
@@ -63,28 +58,15 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
                     sharedViewModel.insertTask(task)
 
                     dismiss()
-                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+                }.setNegativeButton("Cancel") { _, _ ->
                     getDialog()?.cancel()
-                })
+                }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
 
     }
 
-    /* override fun onAttach(context: Context) {
-         super.onAttach(context)
-         try {
-             listener = requireContext() as AddTaskListener
-         } catch (e: Exception) {
-             e.printStackTrace()
-         }
-     }
-
-     interface AddTaskListener {
-         fun getTaskDetails(title: String, description: String)
-     }
- */
     private fun initSetListeners() {
         binding.image.setOnClickListener {
             activityResultLauncher.launch("image/*")
@@ -99,11 +81,8 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
     }
 
     private fun initSetObservers() {
-        /*   sharedViewModel.username.observe(viewLifecycleOwner) {
-               username = it
-           }
-   */
-
+        sharedViewModel.taskList.observe(this) {
+            taskList = it}
     }
 
     private fun datePick() {
