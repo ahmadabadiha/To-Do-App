@@ -20,12 +20,13 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
     private var _binding: AddTaskDialogBinding? = null
     private val binding get() = _binding!!
     private lateinit var uri: Uri
-    private lateinit var activityResultLauncher: ActivityResultLauncher<String>
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var taskList: List<Task>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
             uri = it
             binding.image.setImageURI(uri)
         }
@@ -59,7 +60,7 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
 
                     dismiss()
                 }.setNegativeButton("Cancel") { _, _ ->
-                    getDialog()?.cancel()
+                    dialog?.cancel()
                 }
 
             builder.create()
@@ -69,7 +70,7 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
 
     private fun initSetListeners() {
         binding.image.setOnClickListener {
-            activityResultLauncher.launch("image/*")
+            activityResultLauncher.launch(arrayOf("image/*"))
         }
         binding.datePicker.setOnClickListener {
             datePick()

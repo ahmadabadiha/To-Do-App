@@ -85,7 +85,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         //registerForActivityResult(ActivityResultContracts.OpenDocument()) {
         //  binding.image.setImageURI(parsedUri)
         // }.launch(arrayOf("image/*"))
-        //binding.image.setImageURI(parsedUri)
+        binding.image.setImageURI(parsedUri)
 
         binding.titleEt.setText(task.title)
         binding.descriptionEt.setText(task.description)
