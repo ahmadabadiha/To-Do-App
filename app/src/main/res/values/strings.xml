@@ -16,4 +16,5 @@
     <string name="select_a_time">Select a time</string>
     <string name="description">Description</string>
     <string name="title">Title</string>
+    <string name="share_title">Share task details with</string>
 </resources>

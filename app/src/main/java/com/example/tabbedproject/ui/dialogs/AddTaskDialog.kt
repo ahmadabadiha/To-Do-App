@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.databinding.AddTaskDialogBinding
-import com.example.tabbedproject.ui.SharedViewModel
+import com.example.tabbedproject.ui.sharedviewmodel.SharedViewModel
 import java.util.*
 
 class AddTaskDialog(private val state: String) : DialogFragment() {

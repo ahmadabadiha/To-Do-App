@@ -19,6 +19,8 @@ import com.example.tabbedproject.ui.dialogs.AddTaskDialog
 import com.example.tabbedproject.ui.dialogs.DeleteAllDialog
 import com.example.tabbedproject.ui.dialogs.EditTaskDialog
 import com.example.tabbedproject.ui.dialogs.SearchTaskDialog
+import com.example.tabbedproject.ui.sharedviewmodel.SharedViewModel
+import com.example.tabbedproject.ui.sharedviewmodel.TaskViewModelFactory
 
 
 class ToDoFragment : Fragment() {

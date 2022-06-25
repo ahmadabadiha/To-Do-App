@@ -1,8 +1,9 @@
-package com.example.tabbedproject.ui
+package com.example.tabbedproject.ui.sharedviewmodel
 
 import androidx.lifecycle.*
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.data.User
+import com.example.tabbedproject.ui.repository.Repository
 import kotlinx.coroutines.launch
 
 class SharedViewModel(private val repository: Repository) : ViewModel() {

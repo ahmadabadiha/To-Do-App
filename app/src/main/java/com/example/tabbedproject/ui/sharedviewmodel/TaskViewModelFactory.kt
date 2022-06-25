@@ -1,7 +1,8 @@
-package com.example.tabbedproject.ui
+package com.example.tabbedproject.ui.sharedviewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.tabbedproject.ui.repository.Repository
 import java.lang.IllegalArgumentException
 
 

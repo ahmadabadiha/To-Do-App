@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.tabbedproject.TaskApplication
 import com.example.tabbedproject.data.User
 import com.example.tabbedproject.databinding.FragmentSignUpBinding
+import com.example.tabbedproject.ui.sharedviewmodel.SharedViewModel
+import com.example.tabbedproject.ui.sharedviewmodel.TaskViewModelFactory
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null

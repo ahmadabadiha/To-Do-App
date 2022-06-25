@@ -1,9 +1,11 @@
 package com.example.tabbedproject.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.tabbedproject.R
@@ -23,7 +25,7 @@ class TabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewPager.apply {
+            binding.viewPager.apply {
             adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         }
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

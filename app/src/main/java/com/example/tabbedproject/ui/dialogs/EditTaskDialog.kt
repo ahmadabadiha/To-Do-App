@@ -1,26 +1,20 @@
 package com.example.tabbedproject.ui.dialogs
 
 import android.app.*
-import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.example.tabbedproject.MainActivity
 import com.example.tabbedproject.R
 import com.example.tabbedproject.data.Task
 import com.example.tabbedproject.databinding.EditTaskDialogBinding
-import com.example.tabbedproject.ui.SharedViewModel
+import com.example.tabbedproject.ui.sharedviewmodel.SharedViewModel
 import java.util.*
 
 class EditTaskDialog(private val task: Task) : DialogFragment() {
@@ -79,14 +73,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
 
     private fun setViews() {
         val parsedUri = Uri.parse(task.imageAddress)
-        Log.d("ali", "setViews: image address " + task.imageAddress)
-        Log.d("ali", "setViews: image address prsed" + parsedUri.toString())
-        //Glide.with(requireContext()).load(parsedUri).into(binding.image)
-        //registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-        //  binding.image.setImageURI(parsedUri)
-        // }.launch(arrayOf("image/*"))
         binding.image.setImageURI(parsedUri)
-
         binding.titleEt.setText(task.title)
         binding.descriptionEt.setText(task.description)
         binding.datePicker.text = task.date
@@ -112,7 +99,9 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         binding.shareButton.setOnClickListener {
             val shareText = "title: ${task.title}, description: ${task.description}, time: ${task.date} ${task.time}, status: ${task.state}"
             val x = ShareCompat.IntentBuilder(requireContext()).setText(shareText).setType("text/plain").intent
-            startActivity(x)
+            val title = resources.getString(R.string.share_title)
+            val chooser = Intent.createChooser(x, title)
+            startActivity(chooser)
         }
 
         binding.deleteButton.setOnClickListener {
