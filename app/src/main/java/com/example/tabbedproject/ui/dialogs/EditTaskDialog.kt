@@ -73,6 +73,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
 
     private fun setViews() {
         val parsedUri = Uri.parse(task.imageAddress)
+        Log.d("ahmad", "setViews: " + parsedUri)
         binding.image.setImageURI(parsedUri)
         binding.titleEt.setText(task.title)
         binding.descriptionEt.setText(task.description)
@@ -144,6 +145,4 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

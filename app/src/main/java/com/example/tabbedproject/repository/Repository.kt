@@ -1,4 +1,4 @@
-package com.example.tabbedproject.ui.repository
+package com.example.tabbedproject.repository
 
 import androidx.lifecycle.LiveData
 import com.example.tabbedproject.data.Task
