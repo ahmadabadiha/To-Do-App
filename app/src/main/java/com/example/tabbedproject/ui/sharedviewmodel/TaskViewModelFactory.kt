@@ -12,18 +12,4 @@ class TaskViewModelFactory(private val repository: Repository) : ViewModelProvid
             return SharedViewModel(repository) as T
         } else throw IllegalArgumentException("Invalid ViewModel!!!")
     }
-/*
-
-override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
-            return SharedViewModel(repository) as T
-        } else throw IllegalArgumentException("Invalid ViewModel!!!")    }
-
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
-            return SharedViewModel(repository) as T
-        } else throw IllegalArgumentException("Invalid ViewModel!!!")
-    }
-*/
 }
