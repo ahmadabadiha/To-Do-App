@@ -26,9 +26,9 @@ class DoneFragment : Fragment() {
 
     private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_open) }
     private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_close) }
-    private val toButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom) }
-    private val fromButtom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom) }
-    private val sharedViewModel: SharedViewModel by activityViewModels { TaskViewModelFactory((requireActivity().application as TaskApplication).repository) }
+    private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom) }
+    private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom) }
+    private val sharedViewModel: SharedViewModel by activityViewModels{ TaskViewModelFactory((requireActivity().application as TaskApplication).repository) }
     private var doneTasks: List<Task> = emptyList()
     private var clicked = false
     private lateinit var myAdapter: TaskAdapter
@@ -97,18 +97,18 @@ class DoneFragment : Fragment() {
         binding.addFloatingButton.apply {
             isVisible = true
             isClickable = true
-            startAnimation(fromButtom)
+            startAnimation(fromBottom)
         }
 
         binding.searchFloatingButton.apply {
             isVisible = true
             isClickable = true
-            startAnimation(fromButtom)
+            startAnimation(fromBottom)
         }
         binding.deleteAllFloatingButton.apply {
             isVisible = true
             isClickable = true
-            startAnimation(fromButtom)
+            startAnimation(fromBottom)
         }
 
         binding.openFloatingButton.startAnimation(rotateOpen)
@@ -119,19 +119,19 @@ class DoneFragment : Fragment() {
         binding.addFloatingButton.apply {
             isGone = true
             isClickable = false
-            startAnimation(toButtom)
+            startAnimation(toBottom)
 
         }
         binding.searchFloatingButton.apply {
             isGone = true
             isClickable = false
-            startAnimation(toButtom)
+            startAnimation(toBottom)
         }
 
         binding.deleteAllFloatingButton.apply {
             isGone = true
             isClickable = false
-            startAnimation(toButtom)
+            startAnimation(toBottom)
         }
         binding.openFloatingButton.startAnimation(rotateClose)
 

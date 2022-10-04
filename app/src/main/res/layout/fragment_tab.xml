@@ -7,23 +7,23 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="#FFEB3B"
-            android:backgroundTint="@color/teal_200"
-            app:tabTextColor="@color/black"
-            android:textSize="24sp"
-           />
+            android:backgroundTint="@color/yellow"
+            app:tabTextAppearance="@style/MineCustomTabText"
+            app:tabIndicatorColor="@color/gray"
+            android:textSize="40sp"
+            app:tabTextColor="@color/dark_blue" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 </layout>

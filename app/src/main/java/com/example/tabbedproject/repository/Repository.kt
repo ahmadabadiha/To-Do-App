@@ -15,7 +15,6 @@ class Repository(private val taskDao: TaskDao, private val userDao: UserDao) {
 
     suspend fun getUsers(): List<User> {
         return userDao.getUsers()
-
     }
 
     suspend fun insertTask(task: Task) {

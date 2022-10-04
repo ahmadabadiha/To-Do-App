@@ -27,7 +27,9 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
         super.onCreate(savedInstanceState)
 
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-            uri = it
+            if (it != null) {
+                uri = it
+            }
             binding.image.setImageURI(uri)
         }
     }

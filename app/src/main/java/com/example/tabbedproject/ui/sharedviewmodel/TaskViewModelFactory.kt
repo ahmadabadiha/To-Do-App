@@ -6,10 +6,24 @@ import com.example.tabbedproject.repository.Repository
 import java.lang.IllegalArgumentException
 
 
-class TaskViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+class TaskViewModelFactory(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
             return SharedViewModel(repository) as T
         } else throw IllegalArgumentException("Invalid ViewModel!!!")
     }
+/*
+
+override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
+            return SharedViewModel(repository) as T
+        } else throw IllegalArgumentException("Invalid ViewModel!!!")    }
+
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SharedViewModel::class.java)) {
+            return SharedViewModel(repository) as T
+        } else throw IllegalArgumentException("Invalid ViewModel!!!")
+    }
+*/
 }

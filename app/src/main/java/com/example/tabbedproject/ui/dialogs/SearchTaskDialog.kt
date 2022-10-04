@@ -24,7 +24,7 @@ class SearchTaskDialog : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder.setView(
                 binding.root
-            ).setTitle("Search between done tasks:")
+            ).setTitle("Search between tasks:")
                 .setPositiveButton("Search") { _, _ ->
 
                     sharedViewModel.searchCouple.value =

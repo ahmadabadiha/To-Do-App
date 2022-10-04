@@ -29,9 +29,13 @@ class TaskAdapter(private val doneTasks: List<Task>?) : RecyclerView.Adapter<Tas
             task = doneTasks!![position]
             val title = task.title
             binding.title.text = title
+            binding.title.isSelected = true
             "${task.time} ${task.date}".also { binding.time.text = it }
-            binding.icon.letter = title[0].toString()
-            binding.icon.shapeColor = Color.rgb(Random().nextInt(256), Random().nextInt(256), Random().nextInt(256))
+            binding.icon.apply {
+                letter = title[0].toString()
+                letterSize = 32
+                shapeColor = Color.rgb(Random().nextInt(256), Random().nextInt(256), Random().nextInt(256))
+            }
         }
     }
 
