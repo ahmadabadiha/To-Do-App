@@ -29,7 +29,7 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
             if (it != null) {
                 uri = it
-            }
+            } else uri = Uri.EMPTY
             binding.image.setImageURI(uri)
         }
     }
@@ -47,13 +47,15 @@ class AddTaskDialog(private val state: String) : DialogFragment() {
             ).setTitle("Add a task:")
                 .setPositiveButton("Save") { _, _ ->
                     if (!::uri.isInitialized) uri = Uri.EMPTY
+                    val date = if (binding.datePicker.text.toString() != "Select a date") binding.datePicker.text.toString() else ""
+                    val time = if (binding.timePicker.text.toString() != "Select a time") binding.timePicker.text.toString() else ""
                     val taskId = taskList.size.toString()
                     val task = Task(
                         id = taskId,
                         title = binding.titleEt.text.toString(),
                         description = binding.descriptionEt.text.toString(),
-                        date = binding.datePicker.text.toString(),
-                        time = binding.timePicker.text.toString(),
+                        date = date,
+                        time = time,
                         imageAddress = uri.toString(),
                         state = state,
                         user_username = sharedViewModel.username

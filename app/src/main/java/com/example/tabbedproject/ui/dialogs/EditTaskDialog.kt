@@ -28,8 +28,7 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            uri = it ?: Uri.EMPTY
-            Log.d("ali", "onCreateDialog: " + uri.toString())
+            uri = it ?: Uri.parse(task.imageAddress)
             binding.image.setImageURI(uri)
         }
     }
@@ -49,15 +48,17 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
                 binding.root
             ).setTitle("Edit your task:")
                 .setPositiveButton("Save") { _, _ ->
-                    if (!::uri.isInitialized) uri = Uri.EMPTY
+                    val imageAddress = if (!::uri.isInitialized) task.imageAddress else uri.toString()
+                    val date = if (binding.datePicker.text.toString() != "Select a date") binding.datePicker.text.toString() else ""
+                    val time = if (binding.timePicker.text.toString() != "Select a time") binding.timePicker.text.toString() else ""
                     val taskId = task.id
                     val task = Task(
                         id = taskId,
                         title = binding.titleEt.text.toString(),
                         description = binding.descriptionEt.text.toString(),
-                        date = binding.datePicker.text.toString(),
-                        time = binding.timePicker.text.toString(),
-                        imageAddress = uri.toString(),
+                        date = date,
+                        time = time,
+                        imageAddress = imageAddress,
                         state = binding.autoCompleteTextView.text.toString(),
                         user_username = sharedViewModel.username
                     )
@@ -73,12 +74,11 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
 
     private fun setViews() {
         val parsedUri = Uri.parse(task.imageAddress)
-        Log.d("ahmad", "setViews: " + parsedUri)
-        binding.image.setImageURI(parsedUri)
+        if (parsedUri == Uri.EMPTY) binding.image.setImageResource(R.drawable.ic_menu_gallery) else binding.image.setImageURI(parsedUri)
         binding.titleEt.setText(task.title)
         binding.descriptionEt.setText(task.description)
-        binding.datePicker.text = task.date
-        binding.timePicker.text = task.time
+        binding.datePicker.text = task.date.ifBlank { "Select a date" }
+        binding.timePicker.text = task.time.ifBlank { "Select a time" }
         val items = listOf("To Do", "Doing", "Done")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.autoCompleteTextView.setAdapter(adapter)
@@ -111,7 +111,6 @@ class EditTaskDialog(private val task: Task) : DialogFragment() {
         }
 
     }
-
 
 
     private fun datePick() {
